@@ -6,5 +6,5 @@
     
     <!-- @foreach($nav as $navLink => $navItem)
     <a href="{{ $navLink }}">{{ $navItem }}</a>
-    @endforeach -->
+    @endforeach --> 
 </span>
