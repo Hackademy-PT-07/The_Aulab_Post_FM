@@ -11,8 +11,16 @@ class PageController extends Controller
         $nome = 'Francesco';
     
         $cognome = 'macchittesencula!';
+
+        $auth = [
+            'name' => 'Francesco',
+            'cognome' => 'Margarito',
+            'email' => 'francesco@example.com',
+        ];
     
-        return view('home', ['nome' => $nome, 'cognome' => $cognome]);
+        $auth = [];
+    
+        return view('home', ['auth' => $auth, 'nome' => $nome, 'cognome' => $cognome]);
     }
 
     public function contatti() {
