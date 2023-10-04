@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Article;
 
 class ArticleController extends Controller
 {
-    public function __construct()
+    /* public function __construct()
     {
 
         $title = 'Articoli';
@@ -21,9 +22,9 @@ class ArticleController extends Controller
             5 => ['key' => 5, 'title' => 'Articolo #5', 'category' => 'Gossip', 'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit.']
         ];
     
-        /* return view('articoli.articoli', compact('title', 'subtitle', 'articles'));  */     
+        // return view('articoli.articoli', compact('title', 'subtitle', 'articles'));     
     
-    }
+    } */
 
     public function articles() {
 
@@ -31,21 +32,17 @@ class ArticleController extends Controller
     
         $subtitle = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores culpa praesentium dignissimos facilis eius modi rem officia. Omnis id quo inventore. Possimus, quae cumque fuga ullam voluptates tempora harum totam!';
     
-        return view('articoli.articoli', [
-            'title' => $title,
-            'subtitle' => $subtitle,
-            'articles' => $this->articles,
-        ]);      
+        $articles = Article::all();
+  
+        return view('articoli.articoli', compact('title', 'subtitle', 'articles'));      
     
     }
 
-    public function article($id) {
+    public function article(Article $article, $id) {
+
+        $article = Article::findOrFail($id);
     
-        if(! array_key_exists($id, $this->articles)) {
-            abort(404);
-        }
-    
-        return view('articoli.articolo', ['article' => $this->articles[$id]]);
+        return view('articoli.articolo', compact('article'));
     
     }
 }

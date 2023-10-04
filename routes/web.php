@@ -22,3 +22,42 @@ Route::get('/contatti', [ContactController::class, 'form'])->name('contatti');
 Route::post('/contatti/save', [ContactController::class, 'save'])->name('contatti.save');
 
 Route::get('/chisono', [PageController::class, 'chisono'])->name('chisono');
+
+Route::get('seeder', function () {
+
+    App\Models\Article::create([
+        'title' => 'Articolo #1',
+        'category' => 'Cronaca',
+        'description' => '1 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        'body' => '...',
+    ]);
+
+    App\Models\Article::create([
+        'title' => 'Articolo #2',
+        'category' => 'Politica',
+        'description' => '2 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        'body' => '...',
+    ]);
+
+    App\Models\Article::create([
+        'title' => 'Articolo #3',
+        'category' => 'Economia',
+        'description' => '3 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        'body' => '...',
+    ]);
+
+    App\Models\Article::create([
+        'title' => 'Articolo #4',
+        'category' => 'Sport',
+        'description' => '4 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        'body' => '...',
+    ]);
+
+    App\Models\Article::create([
+        'title' => 'Articolo #5',
+        'category' => 'Gossip',
+        'description' => '5 Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+        'body' => '...',
+    ]);
+
+});
