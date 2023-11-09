@@ -23,7 +23,7 @@ Route::post('/contatti/save', [ContactController::class, 'save'])->name('contatt
 
 Route::get('/chisono', [PageController::class, 'chisono'])->name('chisono');
 
-Route::get('seeder', function () {
+/* Route::get('seeder', function () {
 
     App\Models\Article::create([
         'title' => 'Articolo #1',
@@ -60,4 +60,7 @@ Route::get('seeder', function () {
         'body' => '...',
     ]);
 
-});
+}); */
+
+Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');

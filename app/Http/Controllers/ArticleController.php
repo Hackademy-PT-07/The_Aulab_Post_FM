@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Http\Requests\StoreArticleRequest;
 
 class ArticleController extends Controller
 {
@@ -44,5 +45,42 @@ class ArticleController extends Controller
     
         return view('articoli.articolo', compact('article'));
     
+    }
+
+    public function create()
+    {
+        return view('account.articles.create');
+    }
+
+    public function store(StoreArticleRequest $request)
+    {
+
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'title' => 'required|max:150',
+            'category' => 'required|max:20',
+            'description' => 'required|max:150',
+            'body' => 'required|max:5000',
+        ], [
+            'title.required' => 'Il campo titolo è obbligatorio.',
+            'title.max' => 'Il campo titolo può contenere massimo 150 caratteri.',
+        ]);
+
+        if($validator->fails()) {
+
+            return redirect()->back()->withErrors($validator)->withInput();
+
+        } else {
+            $article = new Article();
+
+            $article->title = $request->title;
+            $article->category = $request->category;
+            $article->description = $request->description;
+            $article->body = $request->body;
+
+            $article->save();
+
+            return redirect()->back()->with(['success' => 'Articolo creato correttamente.']);
+        }
+        
     }
 }
