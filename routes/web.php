@@ -62,5 +62,15 @@ Route::get('/chisono', [PageController::class, 'chisono'])->name('chisono');
 
 }); */
 
-Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
-Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
+
+
+Route::middleware('auth')->group(function() {
+
+    Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+    Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
+
+    Route::get('/account', [App\Http\Controllers\AccountController::class, 'index'])->name('account.index');
+
+    Route::resource('categories', App\Http\Controllers\CategoryController::class);
+
+});

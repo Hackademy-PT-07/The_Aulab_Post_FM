@@ -1,9 +1,13 @@
 <x-main-esercitazione>
     <div class="container mt-5">
 
-        @if(session()->has('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+        <x-success />
+
+        @if($errors->any())
+            <div class="alert alert-danger">
+                @foreach($errors->all() as $error)
+                <span>{{ $error }}</span><br>
+                @endforeach
             </div>
         @endif
 
@@ -27,6 +31,10 @@
                     <input type="text" name="description" value="{{ old('description') }}" id="description" class="form-control" value="{{ old('description') }}">
                     <!-- aggiunge messaggio "the field is required se lasciato vuoto -->
                     @error('description') <span class="small text-danger">{{ $message }}</span> @enderror
+                </div>
+                <div class="col-12">
+                    <label for="image">Carica un'immagine</label>
+                    <input type="file" name="image" id="image" class="form-control">
                 </div>
                 <div class="col-12">
                     <label for="body">Corpo</label>

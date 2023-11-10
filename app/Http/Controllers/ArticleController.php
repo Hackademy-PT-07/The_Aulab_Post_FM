@@ -52,7 +52,7 @@ class ArticleController extends Controller
         return view('account.articles.create');
     }
 
-    public function store(StoreArticleRequest $request)
+    /* public function store(StoreArticleRequest $request)
     {
 
         $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
@@ -81,6 +81,86 @@ class ArticleController extends Controller
 
             return redirect()->back()->with(['success' => 'Articolo creato correttamente.']);
         }
+
+        $article = Article::create($request->all()); 
+
+        if($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $fileName = $request->file('image')->getClientOriginalName();
+            $extension = $request->file('image')->extension();
+            $randomFileName = uniqid('article_image_') . ".$extension";
+            $urlSafeFileName = \Illuminate\Support\Str::slug($fileName) . ".$extension";
+
+            $article->image = $request->file('image')->storeAs('public/images/' . $article->id, $randomFileName, $urlSafeFileName);
+
+            $article->save();
+
+        }
+        
+    } */
+
+    public function store(Request $request)
+    {
+        $article = Article::create($request->all()); 
+
+        if($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $extension = $request->file('image')->extension();
+            $randomFileName = uniqid('article_image_') . ".$extension";
+
+            $article->image = $request->file('image')->storeAs('public/images/' . $article->id, $randomFileName);
+
+            $article->save();
+
+        }
+
+        /*
+        if($request->hasFile('image') && $request->file('image')->isValid()) {
+
+            $fileName = $request->file('image')->getClientOriginalName();
+            $extension = $request->file('image')->extension();
+            $randomFileName = uniqid('article_image_') . ".$extension";
+            $urlSafeFileName = \Illuminate\Support\Str::slug($fileName) . ".$extension";
+
+            $request->file('image')->storeAs('public/images/' . $article->id, $urlSafeFileName);
+
+        }*/      
+                
+        return redirect()->back()->with(['success' => 'Articolo creato correttamente.']);
+    }
+
+    /* solo per validazione tramite Validator::make() */
+    public function storeB(Request $request)
+    {
+        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+            'title' => 'required|max:150',
+            'category' => 'required|max:20',
+            'description' => 'required|max:150',
+            'body' => 'required',
+        ], [
+            'title.required' => 'Il campo titolo è obbligatorio.',
+            'title.max' => 'Il campo titolo può contenere massimo 150 caratteri.',
+        ]);
+
+        if($validator->fails()) {
+
+            return redirect()->back()->withErrors($validator)->withInput();
+
+        } else {
+            Article::create($request->all());
+        }
+
+        /* metodo alternativo salvataggio a database
+        $article = new Article();
+
+        $article->title = $request->title;
+        $article->category = $request->category;
+        $article->description = $request->description;
+        $article->body = $request->body;
+
+        $article->save();
+        */
+
         
     }
 }
